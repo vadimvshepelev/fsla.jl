@@ -3,6 +3,7 @@
 # FSLA.JL project
 # Copyright (c) Vadim V. Shepelev, Ph.D.
 #####################################################################
+using StaticArrays
 
 include("problem.jl")
 
@@ -19,8 +20,8 @@ mutable struct field_primitive
     function field_primitive(pr::Dict)
         N = pr["N"]
         xmin, xmax = pr["task"].x_span 
-        x = collect(range(x_min, x_max, N+1))
-        rho = pr["task"].w[0]
+        x = collect(range(xmin, xmax, N+1))
+        rho = pr["task"].w[1]
         dm = (xmax - xmin) / N / rho
         new(N, zeros(N), [zeros(SVector{3}) for _ in 1:N+1], [zeros(SVector{3}) for _ in 1:N+1], 0.0, dm, 0.0)
     end

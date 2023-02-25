@@ -8,7 +8,7 @@ abstract type EOS end
 
 
 ####### Ideal gas EOS
-struct eos_ideal<: EOS  
+struct eos_ideal <: EOS  
     gamma::Float64
 
     function eos_ideal(_gamma::Float64)
