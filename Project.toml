@@ -1,0 +1,4 @@
+name = "fsla"
+uuid = "d7866878-c2b7-4bff-aee3-f83c923adc4c"
+authors = ["Vadim Shepelev <vadim.aries@gmail.com>"]
+version = "0.1.0"

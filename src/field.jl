@@ -13,10 +13,11 @@ mutable struct Field_primitive
     """
     N::Int64
     x::Vector{Float64}
+    x_new::Vector{Float64}
     xmin::Float64
     xmax::Float64
-    w::Vector{SVector{3,Float64}}
-    w_new::Vector{SVector{3,Float64}}
+    w::Vector{Vector{Float64}}
+    w_new::Vector{Vector{Float64}}
     t::Float64
     tmin::Float64
     tmax::Float64
@@ -31,12 +32,9 @@ mutable struct Field_primitive
         x_new = collect(range(xmin, xmax, N+1))
         rho = pr["task"].w[1]
         dm = (xmax - xmin) / N / rho
-        w = [zeros(SVector{3}) for _ in 1:N+1]
-        for vec in w
-            vec = copy(pr["task"].w)
-        end
+        w = [copy(pr["task"].w) for _ in 1:N+1]
         w_new = copy(w)
-        new(N, x, xmin, xmax, w, w_new, tmin, tmin, tmax, dm, 0.0)
+        new(N, x, x_new, xmin, xmax, w, w_new, tmin, tmin, tmax, dm, 0.0)
     end
 end
 
