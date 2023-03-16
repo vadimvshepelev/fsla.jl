@@ -52,11 +52,17 @@ function calc(pr::Dict, eos::eos_ideal, fld::Field_primitive)::Int8
 		it_num += 1
         all(isapprox.(w_new, w1; atol=0.001)) && break
  	end
-	it_num == 31 && throw(DomainError(-1, "No convergence in $(max_it) iterations"))
+	it_num == 31 && println("No convergence in $(max_it) iterations")  # throw(DomainError(-1, "No convergence in $(max_it) iterations"))
 	# w = deepcopy(w_new)
 	for i in 1:N, j in 1:3 
 		w[i][j] = w_new[i][j]
 	end
+
+
+	i = findall(x -> x .> 0.001, w_new-w1)
+		println(i)
+
+
 	it_num
 end
 
