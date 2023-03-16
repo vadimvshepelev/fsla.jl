@@ -3,9 +3,6 @@
 # FSLA.JL project
 # Copyright (c) Vadim V. Shepelev, Ph.D.
 #####################################################################
-using StaticArrays
-
-include("problem.jl")
 
 
 mutable struct Field_primitive
@@ -32,14 +29,8 @@ mutable struct Field_primitive
         x_new = collect(range(xmin, xmax, N+1))
         rho = pr["task"].w[1]
         dm = (xmax - xmin) / N / rho
-        w = [copy(pr["task"].w) for _ in 1:N+1]
-        w_new = copy(w)
+        w = [deepcopy(pr["task"].w) for _ in 1:N+1]
+        w_new = deepcopy(w)
         new(N, x, x_new, xmin, xmax, w, w_new, tmin, tmin, tmax, dm, 0.0)
     end
-end
-
-
-####### Функция setics для постановки начальных условий #######
-function setics!(pr::Dict, fld::Field_primitive)
-# Не нужна, все делает конструктор Field_primitive    
 end

@@ -1,8 +1,7 @@
-include("problem.jl")
 include("eos.jl")
 include("field.jl")
 include("method.jl")
-
+include("problem.jl")
 
 # rp = VacuumProblem(x_span=(0., 1.), t_span=(0.0, 0.2), w=[2650., 0., 35.6])
 rp = VacuumProblem(x_span=(0., 1.), t_span=(0.0, 0.2), w=[1.0, 0.0, 1.0])
@@ -16,7 +15,7 @@ problem = Dict(
 fld = Field_primitive(problem)
 eos = eos_ideal(1.4)
 
-println("fsLA.jl hydrodynamic 1D Lagrangian code, (c)2023 Vadim V. Shepelev, Ph.D.")
+println("fsLA.jl hydrodynamic 1D Lagrangian code, (c) Vadim V. Shepelev, Ph.D., 2023")
 println()
 println("Starting simulation...")
 
@@ -29,7 +28,8 @@ while fld.t < fld.tmax
     t0 = time()
     it_num = calc(problem, eos, fld)
     t1 = time()
-    println("step=$iter: $(it_num) iterations, t=$(fld.t), dt=$(fld.dt), time=$(t1-t0)s")
+    delta_t = round(t1-t0, sigdigits=3)
+    println("step=$iter: $(it_num) iters, t=$(round(fld.t, digits=3)), dt=$(round(fld.dt, sigdigits=2)), time=$(delta_t)s")
     global iter += 1
     fld.t += fld.dt
 end

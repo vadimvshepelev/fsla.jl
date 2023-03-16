@@ -2,3 +2,6 @@ name = "fsla"
 uuid = "d7866878-c2b7-4bff-aee3-f83c923adc4c"
 authors = ["Vadim Shepelev <vadim.aries@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"

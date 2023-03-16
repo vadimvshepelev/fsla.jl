@@ -1,8 +1,6 @@
-include("problem.jl")
 include("eos.jl")
 include("field.jl")
 
-abstract type Method end
 
 ######## Samarskii explicit-implicit finite difference method in Lagrangian mass coordinates #######
 
@@ -13,12 +11,17 @@ function calc(pr::Dict, eos::eos_ideal, fld::Field_primitive)::Int8
     N::Int64 = pr["N"]
     it_num::Int8, max_it::Int8 = 0, 30
     dm, dt = fld.dm, fld.dt
-	visc_const::Float64 = 20.0 
-	x, x_new, w, w_new = fld.x, fld.x_new, fld.w, fld.w_new
+	visc_const::Float64 = 0.001 # 20.0 
+	x::Vector{Float64}, x_new::Vector{Float64} = fld.x, fld.x_new
+	w::Vector{Vector{Float64}}, w_new::Vector{Vector{Float64}} = fld.w, fld.w_new
     g::Vector{Float64} = cat([(visc_const * w[i][1] * (w[i+1][2] - w[i][2])) for i in 1:N], [0.0], dims=1)
-    w1 = copy(w)
+    w1 = deepcopy(w)
+	flag::Bool = (w1 === w)
     while it_num < 31
-        w1 = copy(w_new)
+        # w1 = deepcopy(w_new)
+		for i in 1:N, j in 1:3 
+			w1[i][j] = w_new[i][j]
+		end
         for i = 1:N       
 			if i==1  
 				p_next_plus  = w1[i][3]
@@ -49,8 +52,11 @@ function calc(pr::Dict, eos::eos_ideal, fld::Field_primitive)::Int8
 		it_num += 1
         all(isapprox.(w_new, w1; atol=0.001)) && break
  	end
-	it_num == 31 && throw(ConvergenceError("No convergence in $(max_it) iterations"))
-	w =copy(w_new)
+	it_num == 31 && throw(DomainError(-1, "No convergence in $(max_it) iterations"))
+	# w = deepcopy(w_new)
+	for i in 1:N, j in 1:3 
+		w[i][j] = w_new[i][j]
+	end
 	it_num
 end
 

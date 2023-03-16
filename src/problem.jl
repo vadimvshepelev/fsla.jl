@@ -48,7 +48,3 @@ end
 function Base.show(io::IO, pr::RiemannProblem)
    print(io, "RiemannProblem: [$(pr.x_span[1]), $(pr.x_span[2])], [$(pr.t_span[1]), $(pr.t_span[2])], wl=$(pr.wl), wr=$(pr.wr), x0=$(pr.xbnd)")
 end
-
-
-
-
