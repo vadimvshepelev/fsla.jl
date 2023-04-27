@@ -1,7 +1,12 @@
 include("eos.jl")
+
+using .EquationsOfState
+
 include("field.jl")
 include("method.jl")
 include("problem.jl")
+
+
 
 # rp = VacuumProblem(x_span=(0., 1.), t_span=(0.0, 0.2), w=[2650., 0., 35.6])
 rp = VacuumProblem(x_span=(0., 1.), t_span=(0.0, 0.2), w=[1.0, 0.0, 1.0])

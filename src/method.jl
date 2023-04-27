@@ -1,7 +1,3 @@
-include("eos.jl")
-include("field.jl")
-
-
 ######## Samarskii explicit-implicit finite difference method in Lagrangian mass coordinates #######
 
 function calc(pr::Dict, eos::eos_ideal, fld::Field_primitive)::Int8  
