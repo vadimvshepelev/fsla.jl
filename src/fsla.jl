@@ -7,18 +7,18 @@ include("method.jl")
 include("problem.jl")
 
 
-
-# rp = VacuumProblem(x_span=(0., 1.), t_span=(0.0, 0.2), w=[2650., 0., 35.6])
-rp = VacuumProblem(x_span=(0., 1.), t_span=(0.0, 0.2), w=[1.0, 0.0, 1.0])
+# rp = VacuumProblem(x_span=(0., 1.), t_span=(0.0, 0.2), w=[2640., 0., 35.6])
+rp = VacuumProblem(x_span=(0., 50.0e-6), t_span=(0.0, 10.0e-9), w=[2640.0, 0.0, 25.0e9])
 
 problem = Dict(
     "task" => rp, 
     "method" => "samarskii", 
-    "N" => 100, 
-    "CFL" => 0.5)
+    "N" => 500, 
+    "CFL" => 0.05)
 
 fld = Field_primitive(problem)
-eos = eos_ideal(1.4)
+# eos = eos_ideal(1.4)
+eos = eos_LiF()
 
 println("fsLA.jl hydrodynamic 1D Lagrangian code, (c) Vadim V. Shepelev, Ph.D., 2023")
 println()

@@ -1,6 +1,6 @@
 module EquationsOfState
 
-export eos_ideal, eos_LiF, getp, gete, getc
+export EOS, eos_ideal, eos_LiF, getp, gete, getc
 
 #####################################################################
 # File 'eos.jl' -- equations of state

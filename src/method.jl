@@ -63,14 +63,13 @@ function calc(pr::Dict, eos::eos_ideal, fld::Field_primitive)::Int8
 end
 
 ######## Calculation of time step according to CFL condition #######
-function calcdt(pr::Dict, eos::eos_ideal, fld::Field_primitive) 
-	x, w= fld.x, fld.w
-	N = pr["N"]
-	CFL = pr["CFL"]
+function calcdt(pr::Dict, eos::T, fld::Field_primitive)::Float64 where {T<:EOS}
+	x::Vector{Float64}, w::Vector{Vector{Float64}}, N::Int64, CFL::Float64 = fld.x, fld.w, fld.N, fld.CFL
 	c_local::Float64 = getc(eos, w[1][1], w[1][3])
-	dt = CFL * (x[2] - x[1]) / (abs(w[1][2]) + c_local)
-	for i=2:N+1
-		c_local, dt = getc(eos, w[i][1], w[i][3]), min(dt, CFL * (x[2] - x[1]) / (abs(w[i][2]) + c_local))
+	imin::Int64, imax::Int64 = fld.imin, fld.imax
+	dt::Float64 = CFL * (x[imin+1] - x[imin]) / (abs(w[imin][2]) + c_local)
+	for i::Int64 = imin:imax+1
+		c_local, dt = getc(eos, w[i][1], w[i][3]), min(dt, CFL * (x[i+1] - x[i]) / (abs(w[i][2]) + c_local))
 	end
 	dt
 end
